@@ -49,8 +49,11 @@ function Simulation(props){
 
             for(let moves in totalSim[iter]){
                 for(let thing in totalSim[iter][moves]){ // where rats are index 0 and food is index 1
-                    let item = totalSim[iter][moves][thing];
-                    console.log(item);
+                    let positions = totalSim[iter][moves][thing];
+                    console.log(positions);
+                    for(let position in totalSim[iter][moves][thing]){
+                        // render objects here
+                    }
 
 
 
