@@ -9,6 +9,7 @@ from scipy.stats import skewnorm
 class Rat():
     # Constants 
     REPRO_REQUIREMENT = 50
+    MOVE_CONST = 1/100
 
     def __init__(self, manager: SimManager, position: np.array, brain, species_id):
         self.manager = manager
@@ -16,26 +17,22 @@ class Rat():
         self.brain:Brain = brain
         self.max_energy: int = 100
         self.energy: int = 100
-        self.hunger = 50
+        self.hunger = 100
         self.age = 0
         self.dir_vec = np.array([0, 0])
-        self.move_cone = math.pi/4
+        self.move_cone = math.pi/8
         self.species_id = species_id
                 
     # Food Object 
     def update(self, food_list: List[np.array], map_radius: int) -> np.array:
         # If rat is hungry it will move
-        print("hit1")
         if self.hunger < 100:
-            print("hit")
             self.move(food_list, map_radius)
         self.eat()
-        self.hunger -= abs(round(np.random.normal(loc = 3, scale = 4)))
-        self.energy -= abs(round(np.random.normal(loc = 3, scale = 4)))
-        self.max_energy = round(100 * math.pow(math.e, -self.age / 20))
+        self.hunger -= .001
+        self.energy -= .001
         #print("energy is: ", self.energy)
         if self.energy <= 0:
-           # print("hit")
             self.manager.active_rats.remove(self)
             return None
         else:
@@ -48,7 +45,7 @@ class Rat():
         for food in food_list:
             dist_to_food = np.linalg.norm(food - self.position)
             # Look for food
-            if dist_to_food > self.brain.occipital / 10:
+            if dist_to_food < self.brain.occipital / 10:
                 continue
             # rat has chance to ignore spotted food based on frontal cortex size
             if np.random.randint(0, 100) >= self.brain.frontal:
@@ -73,13 +70,12 @@ class Rat():
                 new_theta = theta + (math.pi) + np.random.normal(-math.pi/8,math.pi/8)
                 new_pos = np.array([math.cos(new_theta), math.sin(new_theta)])
 
-            self.position += (self.brain.cerebellum * (self.brain.parietal / 100))  * self.dir_vec
-            
-            
-        # Food found
+            self.position -= Rat.MOVE_CONST * (self.brain.cerebellum * (self.brain.parietal / 100))  * self.dir_vec
         else:
             dir_to_food = nearest_food - self.position
             self.position += self.brain.cerebellum * (dir_to_food / np.linalg.norm(dir_to_food))
+            print("food_pos", nearest_food)
+            print("rat_pos", self.position)
 
     def eat(self):
         for food in self.manager.active_food:

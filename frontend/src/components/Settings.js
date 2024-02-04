@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../CSS/Settings.css';
+import '../CSS/Brain.css';
 import '../index.css';
 
 function Settings(props) {

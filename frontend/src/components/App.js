@@ -29,34 +29,30 @@ function App() {
   return (
     <div className="App">
       {(showMenu&&!showStats) && <header className="App-header">
-        <p id="title">
-          RAT SIMULATOR
-        </p>
-        <div className="entry-container">
-          <p>Hack at NC State 2024</p>
-          <div className = "submit" onClick = {handleClick}>Simulate</div>
-        </div>
+          <p id="title">RAT SIMULATOR</p>
+          <div className="entry-container">
+            <p>Hack at NC State 2024</p>
+            <div className = "submit" onClick = {handleClick}>Simulate</div>
+          </div>
       </header> || (!showMenu && !showStats) && 
-        <div>
-          <Brain />
-          <Simulation startSim={startSim}
-                      numFood={numFood}
-                      numIterations={numIterations}
-                      speciesData={speciesData}
-                      setStartSim = {(a) => setStartSim(a)} 
-          />
-          <Settings startSimulation = {() => startSimulation()} 
-                    numIterations = {numIterations}
-                    numFood = {numFood}
-                    speciesData = {speciesData}
-                    setNumIterations = {(a) => setNumIterations(a)}
-                    setNumFood = {(a) => setNumFood(a)}
-                    setSpeciesData = {(a) => setSpeciesData(a)}
-          />
-          
-          <About />
-          
-        </div>
+      <div className="setting-components">
+        <About />
+        <Brain />
+        <Simulation startSim={startSim}
+                    numFood={numFood}
+                    numIterations={numIterations}
+                    speciesData={speciesData}
+                    setStartSim = {(a) => setStartSim(a)} 
+        />
+        <Settings startSimulation = {() => startSimulation()} 
+                  numIterations = {numIterations}
+                  numFood = {numFood}
+                  speciesData = {speciesData}
+                  setNumIterations = {(a) => setNumIterations(a)}
+                  setNumFood = {(a) => setNumFood(a)}
+                  setSpeciesData = {(a) => setSpeciesData(a)}
+        />
+      </div>
 
       }
       {showStats && <StatsPage/>}

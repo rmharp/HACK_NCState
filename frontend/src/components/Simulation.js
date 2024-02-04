@@ -32,7 +32,7 @@ function Simulation(props){
     }
 
     function mouseDisplayCalc(tSim){
-        if(currFrame >props.numIterations*200) return;
+        if(currFrame >props.numIterations*300) return;
         let mice = [];
         let food = [];
         //console.log(tsim)
@@ -47,20 +47,20 @@ function Simulation(props){
         //         }
         //     }
         // }
-        let iterationNumber = Math.floor(currFrame / 50);
-        let moveNumber = currFrame % 50;
+        let iterationNumber = Math.floor(currFrame / 300);
+        let moveNumber = currFrame % 300;
         
         let frame = tSim[`iteration${iterationNumber}`][`moves_data${moveNumber}`];
 
         for(let obj in frame){
-            for(let obj_data in frame[obj]){
-                let posX = obj_data[0]
-                let posY = obj_data[1]
-                console.log([posX, posY])
-                if (obj == "rats"){
-                    mice.push({id: mice.length, posX: 600 + 0.5*pos[0], posY: 600 + 0.5*pos[1], rot: 90});
+            for(let obj_data of frame[obj]){
+                console.log(obj_data);
+                let pos = [obj_data[0], obj_data[1]];
+
+                if (obj === "rats"){
+                    mice.push({id: mice.length, posX: 600 + pos[0], posY: 450 + pos[1], rot: 90});
                  }else{
-                    food.push({id: food.length, posX: 600 + 0.5*pos[0], posY: 600 + 0.5*pos[1]});
+                    food.push({id: food.length, posX: 600 + pos[0], posY: 450 + pos[1]});
                  }
             }
         }
@@ -86,7 +86,7 @@ function Simulation(props){
 
     useEffect(() => {
         if(!props.startSim) return;
-        let data = {num_food: props.numFood, total_iter: props.numIterations, moves_per_iter: 200, map_radius: 50, michael_nums: props.speciesData};
+        let data = {num_food: parseInt(props.numFood), total_iter: parseInt(props.numIterations), moves_per_iter: 200, map_radius: 50, michael_nums: props.speciesData};
         fetch("http://localhost:8000/anze/", {
             method: "POST",
             headers: {
@@ -102,7 +102,7 @@ function Simulation(props){
                 setTotalSim(JSON.parse(result));
                 mouseDisplayCalc(JSON.parse(result));
                 const sim_data = JSON.parse(result);
-                console.log(JSON.parse(result));
+                //console.log(JSON.parse(result));
             })
         
 
@@ -130,7 +130,7 @@ function Simulation(props){
             mouseDisplayCalc(totalSim);
             currFrame += 1;
             
-        }, 100); //each frame
+        }, 2); //each frame
     }, [totalSim])
     
 

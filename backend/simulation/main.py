@@ -40,7 +40,7 @@ class Gorilla(BaseModel):
 
 
 class Chimp(BaseModel):
-    num_food: float
+    num_food: int
     total_iter: int
     moves_per_iter: int
     map_radius: int
@@ -54,17 +54,15 @@ async def fun():
 
 @app.post("/anze")
 async def astro(query: Chimp):
-    # sim = Simulation(manager = SimManager(), num_food = 30, total_iter = 5, moves_per_iter = 10, map_radius = 100)
+    sim = Simulation(manager = SimManager(), num_food = 5, total_iter = 20, moves_per_iter = 300, map_radius = 420)
+    # brain = Brain(frontal = 100, occipital = 50, hypothalamus = 100, parietal = 100, cerebellum = 100)
+    # sim.add_species(brain=brain, num_rats=20)
     # for species in query.michael_nums:
-    #     brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
-    #     sim.add_species(brain=brain, num_rats=species[0])
-    sim = Simulation(manager = SimManager(), num_food = 2, total_iter = 5, moves_per_iter = 200, map_radius = 50)
-    brain = Brain(frontal = 100, occipital = 100, hypothalamus = 100, parietal = 100, cerebellum = 100)
+        # brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
+    brain = Brain(frontal = 100, occipital = 50, hypothalamus = 100, parietal = 100, cerebellum = 100)
     sim.add_species(brain=brain, num_rats=20)
     res = sim.run()
     json_out = sim.res_to_json(res)
-    # the result is a JSON string:
-    print(json_out)
     return json_out
 
 

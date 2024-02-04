@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../CSS/Brain.css';
-import brainOutline from '..//media/brain-outline.JPEG';
+
+import brainOutline2 from '..//media/brain-outline2.JPEG';
 
 //Frontal Lobe, Occipital Lobe, Hypothalamus, Parietal Lobe, Cerebellum
 
@@ -12,12 +13,12 @@ function Brain() {
     };
 
     return (
-        <>
+        <div className="testing1">
             <div className="brain-container">
                 <h1>Test</h1>
-                <img src={brainOutline} className="brain-outline" alt="Brain outline" />
+                <img src={brainOutline2} className="brainOutline2" alt="Brain outline" />
             </div>
-        </>
+        </div>
     );
 }
 
