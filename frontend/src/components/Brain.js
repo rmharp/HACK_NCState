@@ -13,9 +13,10 @@ function Brain() {
 
     return (
         <>
+            <div className="brain-container">
             <h1>Test</h1>
             <img src={brainOutline} className="brain-outline" alt="Brain outline" />
-            
+            </div>
         </>
     );
 }

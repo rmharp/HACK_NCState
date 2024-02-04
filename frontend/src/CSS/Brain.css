@@ -1,3 +1,9 @@
+.brain-container {
+    width: 400px;
+    padding: 4px;
+    height: fit-content;
+    background-color: purple;
+}
 
 img {
     width: 400px;
