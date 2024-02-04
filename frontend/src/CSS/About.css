@@ -1,5 +1,73 @@
-.question-mark {
+.learn-more {
     position: absolute;
+    top: 10px;
     left: 10px;
     box-shadow: 5px 8px 10px 1px gray;
+    border-radius: 8px;
+    width: 50px;
+    height: fit-content;
+}
+
+.about-display {
+    top: 15;
+    margin-top: 30px;
+    width: 500px;
+    height: fit-content;
+    background-color: lightgray;
+    padding: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 8;
+    line-height: 1.5;
+    position: relative; /* Add position relative to make absolute positioning work */
+    animation: dropDown 0.5s ease-in-out forwards; /* Add the dropDown animation */
+    display: none; /* Initially hide the element */
+}
+
+@keyframes dropDown {
+    from {
+        transform: translateY(-100%); /* Start position above the screen */
+    }
+    to {
+        transform: translateY(0); /* End position at the top of the screen */
+    }
+}
+
+.about-display.active {
+    display: block; /* Show the element when it has the 'active' class */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.brain-section {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+
+.brain-section h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.brain-section p {
+    font-size: 14px;
+    margin: 10px 0 0 0;
+}
+
+h2 {
+    font-size: 20px;
+    color: #333;
 }

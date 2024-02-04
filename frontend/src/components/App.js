@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import About from './About';
 // import RatDataComponent from './RatDataComponent';
 import Settings from './Settings';
+import Graphs from './Graphs';
+import Brain from './Brain';
 //import axios from 'axios';
 
 function App() {
@@ -30,6 +32,7 @@ function App() {
         <div className="entry-container">
           <p>Hack at NC State 2024</p>
           <div className = "submit" onClick = {handleClick}>Simulate</div>
+          {/* <Graphs/> */}
         </div>
       </header> }
       {/* <RatDataComponent/> */}
@@ -40,6 +43,7 @@ function App() {
                       numFood={numFood}
                       numIterations={numIterations}
                       speciesData={speciesData}
+                      setStartSim = {(a) => setStartSim(a)} 
           />
           <Settings startSimulation = {() => startSimulation()} 
                     numIterations = {numIterations}
@@ -49,7 +53,9 @@ function App() {
                     setNumFood = {(a) => setNumFood(a)}
                     setSpeciesData = {(a) => setSpeciesData(a)}
           />
-          {/* <About /> */}
+          <About />
+          <Brain />
+          
           
         </div>
 
@@ -60,6 +66,9 @@ function App() {
 }
 
 export default App;
+
+
+
 
 
 

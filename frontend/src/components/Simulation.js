@@ -2,9 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import '../index.css';
 
-const mice = [];
-const food = []
-
 
 function Simulation(props){
 
@@ -13,26 +10,13 @@ function Simulation(props){
     
     const [totalSim, setTotalSim] = useState({});
 
-    function updateMiceDisplay(){
+    function updateMiceDisplay(mice){
         setMiceItems(mice.map(mouse => 
             <div key={mouse.id}>
               <p className={'mouse mouse_' + mouse.id} style={{left: mouse.posX, top: mouse.posY}}>Mouse</p>
-              
             </div>
         ));
     }
-
-    useEffect(() => {
-        for(let i = 0; i < 1; i++){
-            mice[i] = {
-                id: i, 
-                posX: 50,
-                posY: 50,
-                species: "red"
-            };
-        }
-        updateMiceDisplay();
-    }, []);
 
     useEffect(() => {
         if(!props.startSim) return;
@@ -50,27 +34,51 @@ function Simulation(props){
         })
             .then((res) => res.json())
             .then((result) => {
-                fetchResult = result;
-                console.log(result);
+                console.log(JSON.parse(result));
+                setTotalSim(JSON.parse(result));
             })
         
-        setTotalSim(fetchResult);
+        props.setStartSim(false);
 
+    }, [props.startSim, props.numIterations, props.numFood, props.speciesData]);
 
-        for(let i = 0; i < props.num; i++){
-            mice[i] = {
-                id: i, 
-                posX: 50,//fetchResult[i]
-                posY: 50//fetchResult[i]
-            };
+    useEffect(() => {
+        let mice = []
+        
+        for(let iter in totalSim){
+            console.log(iter);
+            for(let moves in iter){
+                for(let item in moves){ // where rats are index 0 and food is index 1
+                    
+                    if (item == 0){
+                        for(let i=0; i < item.length; i++){
+                            if(mice.length < item.length){
+                                mice = [];
+                                for(let j=0; j < item.length; j++){
+                                    mice.push(0);
+                                }
+                            }
+                            for(let j = 0; j < item.length; j++){
+                                let position = item[j];
+                                mice[j] = {id: i, posX: position[0], posY: position[1]};
+                            }
+                        }
+                    }
+
+                    if (item == 1){
+                        //...
+                    }
+                }
+            }
         }
-        updateMiceDisplay();
-    }, [props.startSim]);
+        console.log("MICE", mice);
+        updateMiceDisplay(mice);
+    }, [totalSim])
 
-    const interval = setInterval(() => {
-        console.log('FRAME');
-        //updateMiceDisplay();
-    }, 1000); //each frame
+    // const interval = setInterval(() => {
+    //     console.log('FRAME');
+    //     //updateMiceDisplay();
+    // }, 1000); //each frame
     
 
     return (

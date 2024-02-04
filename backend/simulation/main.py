@@ -3,6 +3,7 @@ from simulation import Simulation
 from Rat.brain import Brain
 from sim_manager import SimManager
 from pydantic import BaseModel
+import json
 
 
 
@@ -53,18 +54,18 @@ async def fun():
 
 @app.post("/anze")
 async def astro(query: Chimp):
-    # sim = Simulation(SimManager,
-    #                  query.num_rats,
-    #                  query.num_food,
-    #                  query.total_iter,
-    #                  query.moves_per_iter,
-    #                  query.map_radius)
+    # sim = Simulation(manager = SimManager(), num_food = 30, total_iter = 5, moves_per_iter = 10, map_radius = 100)
+    # for species in query.michael_nums:
+    #     brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
+    #     sim.add_species(brain=brain, num_rats=species[0])
     sim = Simulation(manager = SimManager(), num_food = 30, total_iter = 5, moves_per_iter = 10, map_radius = 100)
-    for species in query.michael_nums:
-        brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
-        sim.add_species(brain=brain, num_rats=species[0])
-
-    return sim.run()
+    brain = Brain(frontal = 50, occipital = 50, hypothalamus = 50, parietal = 50, cerebellum = 50)
+    sim.add_species(brain=brain, num_rats=1)
+    res = sim.run()
+    json_out = sim.res_to_json(res)
+    # the result is a JSON string:
+    print(json_out)
+    return json_out
 
 
 # @app.post('/gorilla')

@@ -70,7 +70,7 @@ class Rat():
                 new_theta = theta + (math.pi) + np.random.normal(-math.pi/8,math.pi/8)
                 new_pos = np.array([math.cos(new_theta), math.sin(new_theta)])
 
-            self.position += self.brain.cerebellum  * self.dir_vec
+            self.position += (self.brain.cerebellum * (self.brain.parietal / 100))  * self.dir_vec
             
             
         # Food found
