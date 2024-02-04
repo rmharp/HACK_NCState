@@ -16,7 +16,7 @@ class Rat():
         self.brain:Brain = brain
         self.max_energy: int = 100
         self.energy: int = 100
-        self.hunger = 100
+        self.hunger = 50
         self.age = 0
         self.dir_vec = np.array([0, 0])
         self.move_cone = math.pi/4
@@ -25,9 +25,11 @@ class Rat():
     # Food Object 
     def update(self, food_list: List[np.array], map_radius: int) -> np.array:
         # If rat is hungry it will move
-        if self.hunger < 100 - np.clip(skewnorm.rvs(a=-50, loc=100, scale=self.brain.hypothalamus), 0, 100):
+        print("hit1")
+        if self.hunger < 100:
+            print("hit")
             self.move(food_list, map_radius)
-        self.eat(food_list)
+        self.eat()
         self.hunger -= abs(round(np.random.normal(loc = 3, scale = 4)))
         self.energy -= abs(round(np.random.normal(loc = 3, scale = 4)))
         self.max_energy = round(100 * math.pow(math.e, -self.age / 20))
@@ -79,11 +81,11 @@ class Rat():
             dir_to_food = nearest_food - self.position
             self.position += self.brain.cerebellum * (dir_to_food / np.linalg.norm(dir_to_food))
 
-    def eat(self, food_list):
-        for food in food_list:
+    def eat(self):
+        for food in self.manager.active_food:
             dist_to_food = np.linalg.norm(food - self.position)
-            if dist_to_food < 3:
-                food_list = [arr for arr in food_list if not np.array_equal(arr, food)]
+            if dist_to_food < 10:
+                self.manager.active_food = [arr for arr in self.manager.active_food if not np.array_equal(arr, food)]
                 self.hunger += 10
                 if self.energy < self.max_energy:
                     self.energy += 10
@@ -91,7 +93,7 @@ class Rat():
                 continue
 
     def spawn(self, map_radius: int):
-        theta = np.random.uniform(1, 360)
+        theta = np.random.uniform(0, 2 * math.pi)
         length = np.random.uniform(0, map_radius)
         self.position = np.array([math.cos(theta), math.sin(theta)])
         self.position *= length

@@ -29,76 +29,40 @@ class Simulation:
             self.manager.active_rats.append(rat)
         Simulation.NEXT_SPECIES_ID += 1
 
-
-    def run(self) -> List[List[list]]:
-        iter_data: List[List[list]] = []
-
-        for _ in range(self.total_iter):
-
-            positions = []
-            init_pos = []
-            # for rat in self.acti
-            for _ in range(self.moves_per_iter):
-                rats_or_food = []
-
-                
-                
-                positions.append([])
+    def run(self):
+        out = dict()
+        for i in range(self.total_iter):
+            out[f"iteration{i}"] = {}
+            for j in range(self.moves_per_iter):
+                out[f"iteration{i}"][f"moves_data{j}"] = {}
+                out[f"iteration{i}"][f"moves_data{j}"]["rats"] = []
+                out[f"iteration{i}"][f"moves_data{j}"]["food"] = []
                 for rat in self.manager.active_rats:
                     rat_pos = rat.update(self.manager.active_food, self.map_radius)
+                    if rat_pos is None:
+                        continue
+                    pos = rat.position.tolist()
                     rotation = np.arctan2(rat.dir_vec[1], rat.dir_vec[0])
-                    if rat_pos is not None:
-                        pos_and_rot = rat_pos.tolist()
-                        pos_and_rot.append(rotation)
-                        pos_and_rot.append(rat.species_id)
-                        positions.append(pos_and_rot)
-                rats_or_food.append(positions)
-
-                positions = [x.tolist() for x in self.manager.active_food]
-                rats_or_food.append(positions)
-                move_data.append(rats_or_food)
-
-            iter_data.append(move_data)
-                    
-            self.manager.reset_round(self.map_radius)
-            for _ in range(self.num_food):
-                theta = np.random.uniform(0, 2 * math.pi)
-                length = np.random.uniform(0, self.map_radius)
-                pos = length * np.array([math.cos(theta), math.sin(theta)])
-                self.manager.active_food.append(pos)
-            
-        return iter_data
-
-        
+                    out[f"iteration{i}"][f"moves_data{j}"]["rats"].append([pos[0], pos[1], rotation, rat.species_id])
+                for k, food in enumerate(self.manager.active_food):
+                    print(k)
+                    pos = food.tolist()
+                    out[f"iteration{i}"][f"moves_data{j}"]["food"].append([pos[0], pos[1]])
+            self.manager.reset_round(map_radius=self.map_radius, num_food=self.num_food)
+        return out
     
     def res_to_json(self, res):
-        out_data = dict()
-        for i, iter in enumerate(res):
-            out_data[f"iteration{i}"] = {}
-            for j, moves in enumerate(iter):
-                out_data[f"iteration{i}"][f"moves_data{j}"] = {}
-                out_data[f"iteration{i}"][f"moves_data{j}"]["rats"] = {}
-                out_data[f"iteration{i}"][f"moves_data{j}"]["food"] = {}
-                for k, mouse_or_food in enumerate(moves):
-                    for l, pos in enumerate(mouse_or_food):
-                            if k == 0:
-                                out_data[f"iteration{i}"][f"moves_data{j}"]["rats"][f"pos{l}"] = pos
-                            else:
-                                out_data[f"iteration{i}"][f"moves_data{j}"]["food"][f"pos{l}"] = pos
-        
-        json_string = json.dumps(out_data)
+        json_string = json.dumps(res)
         return json_string
     
     def heat_map_data_out(self, data):
         out_data = []
         data = json.loads(data)
-        print(data)
         moves_per_iter = len(data["iteration0"])
         for cur_iter_num, iter in enumerate(data):
             for cur_move_num, moves in enumerate(data[iter]):
                 for position in data[iter][moves]["rats"]:
                     pos = data[iter][moves]["rats"][position]
-                    print(pos)
                     frame = int(cur_iter_num * moves_per_iter) + cur_move_num
                     #out_data.append([frame, pos[0], pos[1], pos[3]])
 
@@ -110,11 +74,13 @@ class Simulation:
 if __name__ == "__main__":
     seed = 123
     sim_manager = SimManager()
-    sim = Simulation(manager = sim_manager, num_food = 20, total_iter = 1, moves_per_iter = 1, map_radius = 100)
+    sim = Simulation(manager = sim_manager, num_food = 20, total_iter = 1, moves_per_iter = 10, map_radius = 100)
     brain = Brain(frontal=100, occipital=100, hypothalamus=100, parietal=100, cerebellum=100)
     sim.add_species(brain=brain, num_rats=1)
     sim_res = sim.run()
+    print(sim_res)
+    print(type(sim_res))
     out_json = sim.res_to_json(sim_res)
-    heat_map_data = sim.heat_map_data_out(out_json)
-    print(heat_map_data)
+    print(out_json)
+    #heat_map_data = sim.heat_map_data_out(out_json)
 

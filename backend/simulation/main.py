@@ -58,9 +58,9 @@ async def astro(query: Chimp):
     # for species in query.michael_nums:
     #     brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
     #     sim.add_species(brain=brain, num_rats=species[0])
-    sim = Simulation(manager = SimManager(), num_food = 30, total_iter = 5, moves_per_iter = 10, map_radius = 100)
-    brain = Brain(frontal = 50, occipital = 50, hypothalamus = 50, parietal = 50, cerebellum = 50)
-    sim.add_species(brain=brain, num_rats=1)
+    sim = Simulation(manager = SimManager(), num_food = 2, total_iter = 5, moves_per_iter = 200, map_radius = 50)
+    brain = Brain(frontal = 100, occipital = 100, hypothalamus = 100, parietal = 100, cerebellum = 100)
+    sim.add_species(brain=brain, num_rats=20)
     res = sim.run()
     json_out = sim.res_to_json(res)
     # the result is a JSON string:

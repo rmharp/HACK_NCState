@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import About from './About';
 // import RatDataComponent from './RatDataComponent';
 import Settings from './Settings';
-import Graphs from './Graphs';
 import Brain from './Brain';
+import StatsPage from './StatsPage';
+
 //import axios from 'axios';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
   const [numFood, setNumFood] = useState(1);
   const [numIterations, setNumIterations] = useState(1);
   const [speciesData, setSpeciesData] = useState([]); // ArrayList of arrays for species data
+  const [showStats, setShowStats] = useState(false);
 
 
   function handleClick(){
@@ -23,24 +25,18 @@ function App() {
   function startSimulation(){
     setStartSim(true)
   }
-
-  const positions = Array.from({ length: 150 }, (_, i) => ({ x: i + 1, y: i + 1 }));
-
+  
   return (
     <div className="App">
-      {showMenu && <header className="App-header">
+      {(showMenu&&!showStats) && <header className="App-header">
         <p id="title">
           RAT SIMULATOR
         </p>
         <div className="entry-container">
           <p>Hack at NC State 2024</p>
           <div className = "submit" onClick = {handleClick}>Simulate</div>
-          <Graphs positions={positions} />;
         </div>
-      </header> }
-      {/* <RatDataComponent/> */}
-      
-      {(!showMenu) && 
+      </header> || (!showMenu && !showStats) && 
         <div>
           <Brain />
           <Simulation startSim={startSim}
@@ -63,16 +59,10 @@ function App() {
         </div>
 
       }
+      {showStats && <StatsPage/>}
 
     </div>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
