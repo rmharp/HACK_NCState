@@ -10,7 +10,7 @@ class Rat():
     # Constants 
     REPRO_REQUIREMENT = 50
 
-    def __init__(self, manager: SimManager, position: np.array, brain):
+    def __init__(self, manager: SimManager, position: np.array, brain, species_id):
         self.manager = manager
         self.position = position
         self.brain:Brain = brain
@@ -20,6 +20,7 @@ class Rat():
         self.age = 0
         self.dir_vec = np.array([0, 0])
         self.move_cone = math.pi/4
+        self.species_id = species_id
                 
     # Food Object 
     def update(self, food_list: List[np.array], map_radius: int) -> np.array:
@@ -103,7 +104,7 @@ class Rat():
         repro_factor = self.energy * (self.brain.hypothalamus / 100)
 
         if repro_factor > Rat.REPRO_REQUIREMENT:
-            child = Rat(manager=self.manager, position=np.array([0, 0]), brain=self.brain)
+            child = Rat(manager=self.manager, position=np.array([0, 0]), brain=self.brain, species_id=self.species_id)
         else:
             child = None
         return child

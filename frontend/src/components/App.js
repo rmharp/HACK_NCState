@@ -15,6 +15,7 @@ function App() {
   const [numIterations, setNumIterations] = useState(1);
   const [speciesData, setSpeciesData] = useState([]); // ArrayList of arrays for species data
 
+
   function handleClick(){
     setShowMenu(0);
   }
@@ -22,6 +23,8 @@ function App() {
   function startSimulation(){
     setStartSim(true)
   }
+
+  const positions = Array.from({ length: 150 }, (_, i) => ({ x: i + 1, y: i + 1 }));
 
   return (
     <div className="App">
@@ -32,7 +35,7 @@ function App() {
         <div className="entry-container">
           <p>Hack at NC State 2024</p>
           <div className = "submit" onClick = {handleClick}>Simulate</div>
-          {/* <Graphs/> */}
+          <Graphs positions={positions} />;
         </div>
       </header> }
       {/* <RatDataComponent/> */}

@@ -35,12 +35,14 @@ class Simulation:
 
         for _ in range(self.total_iter):
 
+            positions = []
+            init_pos = []
+            # for rat in self.acti
             for _ in range(self.moves_per_iter):
                 rats_or_food = []
 
-                positions = []
-                init_pos = []
-                for rat in 
+                
+                
                 positions.append([])
                 for rat in self.manager.active_rats:
                     rat_pos = rat.update(self.manager.active_food, self.map_radius)
