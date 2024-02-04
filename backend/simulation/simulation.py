@@ -7,6 +7,7 @@ import math
 import json
 
 class Simulation:
+    NEXT_SPECIES_ID = 0
     def __init__(self, manager: SimManager, num_food: int, total_iter: int, moves_per_iter: int, map_radius: int):
         self.manager = manager
         self.num_food = num_food
@@ -23,32 +24,36 @@ class Simulation:
     
     def add_species(self, brain:Brain, num_rats: int):
         for _ in range(num_rats):
-            rat = Rat(manager=self.manager, position=np.array([0, 0]), brain=brain)
+            rat = Rat(manager=self.manager, position=np.array([0, 0]), brain=brain, species_id=Simulation.NEXT_SPECIES_ID)
             rat.spawn(map_radius=self.map_radius)
             self.manager.active_rats.append(rat)
+        Simulation.NEXT_SPECIES_ID += 1
 
 
     def run(self) -> List[List[list]]:
         iter_data: List[List[list]] = []
 
         for _ in range(self.total_iter):
-            move_data: List[list] = [[x.position.tolist() for x in self.manager.active_rats]]
+
             for _ in range(self.moves_per_iter):
-                for _ in ["rats", "food"]:
-                    rats_or_food = []
+                rats_or_food = []
 
-                    positions = []
-                    for rat in self.manager.active_rats:
-                        rat_pos = rat.update(self.manager.active_food, self.map_radius)
-                        rotation = np.arctan2(rat.dir_vec[1], rat.dir_vec[0])
-                        if rat_pos is not None:
-                            pos_and_rot = rat_pos.tolist()
-                            pos_and_rot.append(rotation)
-                            positions.append(pos_and_rot)
-                    rats_or_food.append(positions)
+                positions = []
+                init_pos = []
+                for 
+                positions.append([])
+                for rat in self.manager.active_rats:
+                    rat_pos = rat.update(self.manager.active_food, self.map_radius)
+                    rotation = np.arctan2(rat.dir_vec[1], rat.dir_vec[0])
+                    if rat_pos is not None:
+                        pos_and_rot = rat_pos.tolist()
+                        pos_and_rot.append(rotation)
+                        pos_and_rot.append(rat.species_id)
+                        positions.append(pos_and_rot)
+                rats_or_food.append(positions)
 
-                    positions = [x.tolist() for x in self.manager.active_food]
-                    rats_or_food.append(positions)
+                positions = [x.tolist() for x in self.manager.active_food]
+                rats_or_food.append(positions)
                 move_data.append(rats_or_food)
 
             iter_data.append(move_data)
@@ -81,6 +86,23 @@ class Simulation:
         
         json_string = json.dumps(out_data)
         return json_string
+    
+    def heat_map_data_out(self, data):
+        out_data = []
+        data = json.loads(data)
+        print(data)
+        moves_per_iter = len(data["iteration0"])
+        for cur_iter_num, iter in enumerate(data):
+            for cur_move_num, moves in enumerate(data[iter]):
+                for position in data[iter][moves]["rats"]:
+                    pos = data[iter][moves]["rats"][position]
+                    print(pos)
+                    frame = int(cur_iter_num * moves_per_iter) + cur_move_num
+                    #out_data.append([frame, pos[0], pos[1], pos[3]])
+
+        return out_data
+
+
         
 
 if __name__ == "__main__":
@@ -91,5 +113,6 @@ if __name__ == "__main__":
     sim.add_species(brain=brain, num_rats=1)
     sim_res = sim.run()
     out_json = sim.res_to_json(sim_res)
-    print(out_json)
+    heat_map_data = sim.heat_map_data_out(out_json)
+    print(heat_map_data)
 
