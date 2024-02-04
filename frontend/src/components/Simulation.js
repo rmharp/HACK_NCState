@@ -51,6 +51,10 @@ function Simulation(props){
                 for(let thing in totalSim[iter][moves]){ // where rats are index 0 and food is index 1
                     let item = totalSim[iter][moves][thing];
                     console.log(item);
+
+
+
+                    /*
                     if (item == 0){
                         for(let i=0; i < item.length; i++){
                             if(mice.length < item.length){
@@ -65,6 +69,7 @@ function Simulation(props){
                             }
                         }
                     }
+                    */
 
                     if (item == 1){
                         //...
