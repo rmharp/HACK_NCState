@@ -39,6 +39,7 @@ function App() {
       
       {(!showMenu) && 
         <div>
+          <Brain />
           <Simulation startSim={startSim}
                       numFood={numFood}
                       numIterations={numIterations}
@@ -53,9 +54,8 @@ function App() {
                     setNumFood = {(a) => setNumFood(a)}
                     setSpeciesData = {(a) => setSpeciesData(a)}
           />
-          <About />
-          <Brain />
           
+          <About />
           
         </div>
 

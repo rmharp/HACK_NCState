@@ -10,7 +10,8 @@
 
 .about-display {
     top: 15;
-    z-index: 3;
+    position: absolute;
+    z-index: 999;
     margin-top: 30px;
     width: 500px;
     height: fit-content;

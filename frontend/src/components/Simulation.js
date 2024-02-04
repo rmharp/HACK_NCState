@@ -49,34 +49,9 @@ function Simulation(props){
 
             for(let moves in totalSim[iter]){
                 for(let thing in totalSim[iter][moves]){ // where rats are index 0 and food is index 1
-                    let positions = totalSim[iter][moves][thing];
-                    console.log(positions);
                     for(let position in totalSim[iter][moves][thing]){
-                        // render objects here
+                        console.log(totalSim[iter][moves][thing][position])
                     }
-
-
-
-                    /*
-                    if (item == 0){
-                        for(let i=0; i < item.length; i++){
-                            if(mice.length < item.length){
-                                mice = [];
-                                for(let j=0; j < item.length; j++){
-                                    mice.push(0);
-                                }
-                            }
-                            for(let j = 0; j < item.length; j++){
-                                let position = item[j];
-                                mice[j] = {id: i, posX: position[0], posY: position[1]};
-                            }
-                        }
-                    }
-                    */
-
-                    // if (item == 1){
-                        //...
-                    // }
                 }
             }
         }
