@@ -6,23 +6,22 @@ import '../index.css';
 function Settings(props) {
     // Pass numFood, numIterations, speciesData into simulation.py
     const [numSpecies, setNumSpecies] = useState(1); // For the number of species
-    const [brainSettings, setBrainSettings] = useState([1, 1, 1, 1, 1]); // For brain settings
     const [totalRat, setTotalRat] = useState(0); // Total number of rats
     const [animationClass, setAnimationClass] = useState('');
 
     console.log("ALL SPECIES ARRAY", props.speciesData);
 
     const handleSliderChange = (index, value) => {
-        const newSettings = [...brainSettings];
+        const newSettings = [...props.brainColors];
         newSettings[index] = value;
-        setBrainSettings(newSettings);
+        props.setBrainColors(newSettings);
     };
 
     const handleAddSpecies = () => {
-        const newSpecies = [numSpecies, ...brainSettings];
+        const newSpecies = [numSpecies, ...props.brainColors];
         setTotalRat(totalRat + numSpecies);
         setNumSpecies(1);
-        setBrainSettings([1, 1, 1, 1, 1]);
+        props.setBrainColors([1, 1, 1, 1, 1]);
         props.setSpeciesData([...props.speciesData, newSpecies]); // Add newSpecies to speciesData
 
         console.log("CURRENT SPECIES ARRAY", newSpecies);
@@ -34,7 +33,7 @@ function Settings(props) {
     function handleSimulationClick(){        
         alert("Simulation running");
         setTotalRat(0);
-        setBrainSettings([1, 1, 1, 1, 1])
+        props.setBrainColors([1, 1, 1, 1, 1]);
         setNumSpecies(1);
         props.setNumFood(1);
         props.setNumIterations(1);
@@ -86,13 +85,13 @@ function Settings(props) {
                         {index === 2 && 'Hypothalamus'}
                         {index === 3 && 'Parietal Lobe'}
                         {index === 4 && 'Cerebellum'}
-                        : {brainSettings[index]}
+                        : {props.brainColors[index]}
                     </p>
                     <input
                         type="range"
                         min="1"
                         max="100"
-                        value={brainSettings[index]}
+                        value={props.brainColors[index]}
                         onChange={(e) => handleSliderChange(index, parseInt(e.target.value))}
                     />
                 </div>

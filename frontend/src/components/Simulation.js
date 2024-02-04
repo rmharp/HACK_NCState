@@ -90,7 +90,9 @@ function Simulation(props){
     useEffect(() => {
         if(!props.startSim) return;
         let data = {num_food: parseInt(props.numFood), total_iter: parseInt(props.numIterations), moves_per_iter: 200, map_radius: 50, michael_nums: props.speciesData};
-        fetch("http://localhost:8000/anze/", {
+        //This is where I think that things have gone wrong
+        //I think that it is because the uvicorn server is giving a 307 redirect code 
+        fetch("http://localhost:8060/anze", {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -100,13 +102,13 @@ function Simulation(props){
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         })
             .then((res) => res.json())
-            .then((result) => {
+            .then((result => {
                 console.log(typeof result);
                 setTotalSim(JSON.parse(result));
                 mouseDisplayCalc(JSON.parse(result));
-                // const sim_data = JSON.parse(result);
+                JSON.parse(result);
                 //console.log(JSON.parse(result));
-            })
+            }))
         
 
         // get_json().then(data =>{

@@ -16,6 +16,7 @@ function App() {
   const [numIterations, setNumIterations] = useState(1);
   const [speciesData, setSpeciesData] = useState([]); // ArrayList of arrays for species data
   const [showStats, setShowStats] = useState(false);
+  const [brainColors, setBrainColors] = useState([0,0,0,0,0]);
 
 
   function handleClick(){
@@ -37,7 +38,7 @@ function App() {
       </header> || (!showMenu && !showStats) && 
       <div className="setting-components">
         <About />
-        <Brain />
+        <Brain brainColors={brainColors} />
         <Simulation startSim={startSim}
                     numFood={numFood}
                     numIterations={numIterations}
@@ -52,6 +53,8 @@ function App() {
                   setNumIterations = {(a) => setNumIterations(a)}
                   setNumFood = {(a) => setNumFood(a)}
                   setSpeciesData = {(a) => setSpeciesData(a)}
+                  setBrainColors = {(a) => setBrainColors(a)}
+                  brainColors = {brainColors}
         />
       </div>
 

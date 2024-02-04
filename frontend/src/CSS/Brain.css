@@ -1,7 +1,8 @@
 .brain-container {
-    width: 400px;
-    padding: 4px;
+    position: relative;
+    width: 400px; /* Adjust width as needed */
     height: fit-content;
+    margin: auto;
 }
 .testing1 {
     background-color: bisque;
@@ -11,6 +12,10 @@
     margin-right: auto;
     margin-top: 10%;
 }
+
 img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 400px;
 }
