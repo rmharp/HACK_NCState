@@ -32,7 +32,10 @@ function Simulation(props){
     }
 
     function mouseDisplayCalc(tSim){
-        if(currFrame >props.numIterations*300) return;
+        if(currFrame >props.numIterations*300) {
+            setShowStats(true);
+            return;
+        }
         let mice = [];
         let food = [];
         //console.log(tsim)

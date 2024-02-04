@@ -73,7 +73,7 @@ class Simulation:
 if __name__ == "__main__":
     seed = 123
     sim_manager = SimManager()
-    sim = Simulation(manager = sim_manager, num_food = 10, total_iter = 10, moves_per_iter = 1000, map_radius = 100)
+    sim = Simulation(manager = sim_manager, num_food = 10, total_iter = 10, moves_per_iter = 300, map_radius = 100)
     brain = Brain(frontal=100, occipital=100, hypothalamus=100, parietal=100, cerebellum=100)
     sim.add_species(brain=brain, num_rats=20)
     sim_res = sim.run()

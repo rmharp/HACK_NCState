@@ -5,7 +5,7 @@ import About from './About';
 // import RatDataComponent from './RatDataComponent';
 import Settings from './Settings';
 import Brain from './Brain';
-import StatsPage from './StatsPage';
+// import StatsPage from './StatsPage';
 
 //import axios from 'axios';
 
@@ -43,6 +43,7 @@ function App() {
                     numIterations={numIterations}
                     speciesData={speciesData}
                     setStartSim = {(a) => setStartSim(a)} 
+                    setShowStats = {(a) => setShowStats(a)}
         />
         <Settings startSimulation = {() => startSimulation()} 
                   numIterations = {numIterations}
@@ -55,7 +56,7 @@ function App() {
       </div>
 
       }
-      {showStats && <StatsPage/>}
+      {/* {showStats && <StatsPage/>} */}
 
     </div>
   );

@@ -65,7 +65,7 @@ class Rat():
             theta = np.arctan2(self.position[1], self.position[0])
             new_theta = np.array(np.random.normal(theta, scale=self.move_cone))
             self.dir_vec = np.array([math.cos(new_theta), math.sin(new_theta)])
-            new_pos = self.position + self.brain.cerebellum  * self.dir_vec
+            new_pos = self.position + (self.brain.cerebellum  * self.dir_vec)
             while np.linalg.norm(new_pos) > map_radius:
                 new_theta = theta + (math.pi) + np.random.normal(-math.pi/8,math.pi/8)
                 new_pos = np.array([math.cos(new_theta), math.sin(new_theta)])
@@ -74,8 +74,6 @@ class Rat():
         else:
             dir_to_food = nearest_food - self.position
             self.position += self.brain.cerebellum * (dir_to_food / np.linalg.norm(dir_to_food))
-            print("food_pos", nearest_food)
-            print("rat_pos", self.position)
 
     def eat(self):
         for food in self.manager.active_food:
