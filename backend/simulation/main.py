@@ -57,8 +57,8 @@ async def astro(query: Chimp):
     sim = Simulation(manager = SimManager(), num_food = 5, total_iter = 20, moves_per_iter = 300, map_radius = 420)
     # brain = Brain(frontal = 100, occipital = 50, hypothalamus = 100, parietal = 100, cerebellum = 100)
     # sim.add_species(brain=brain, num_rats=20)
-    # for species in query.michael_nums:
-        # brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
+    for species in query.michael_nums:
+        brain = Brain(frontal = species[1], occipital = species[2], hypothalamus = species[3], parietal = species[4], cerebellum = species[5])
     brain = Brain(frontal = 100, occipital = 50, hypothalamus = 100, parietal = 100, cerebellum = 100)
     sim.add_species(brain=brain, num_rats=20)
     res = sim.run()

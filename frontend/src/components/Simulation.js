@@ -33,7 +33,7 @@ function Simulation(props){
 
     function mouseDisplayCalc(tSim){
         if(currFrame >props.numIterations*300) {
-            setShowStats(true);
+            // props.setShowStats(true);
             return;
         }
         let mice = [];
@@ -104,7 +104,7 @@ function Simulation(props){
                 console.log(typeof result);
                 setTotalSim(JSON.parse(result));
                 mouseDisplayCalc(JSON.parse(result));
-                const sim_data = JSON.parse(result);
+                // const sim_data = JSON.parse(result);
                 //console.log(JSON.parse(result));
             })
         
