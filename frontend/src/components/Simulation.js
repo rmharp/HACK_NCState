@@ -74,9 +74,9 @@ function Simulation(props){
                     }
                     */
 
-                    if (item == 1){
+                    // if (item == 1){
                         //...
-                    }
+                    // }
                 }
             }
         }
