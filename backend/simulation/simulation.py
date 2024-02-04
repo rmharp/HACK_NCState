@@ -40,7 +40,7 @@ class Simulation:
 
                 positions = []
                 init_pos = []
-                for 
+                for rat in 
                 positions.append([])
                 for rat in self.manager.active_rats:
                     rat_pos = rat.update(self.manager.active_food, self.map_radius)
