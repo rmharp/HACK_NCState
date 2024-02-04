@@ -1,0 +1,5 @@
+.question-mark {
+    position: absolute;
+    left: 10px;
+    box-shadow: 5px 8px 10px 1px gray;
+}
